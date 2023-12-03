@@ -19,22 +19,23 @@ int main(){
     std::ifstream infile("input-file.txt");
     std::string line;
     int number = 0;
+    int lineNumber =0;
+    int firstNmberInLine =0;
+    int lastNumberInLine =0;
 
-    std::unordered_map<std::string, std::string> spellOutDigits = {
-    {"zero", "0"}, {"one", "1"}, {"two", "2"}, {"three", "3"}, {"four", "4"},
-    {"five", "5"}, {"six", "6"}, {"seven", "7"}, {"eight", "8"}, {"nine", "9"}
+
+
+    std::unordered_map<std::string, std::string> spellOutDigits = { {"one", "o1e"}, {"two", "t2o"}, {"three", "t3e"}, {"four", "f4r"},
+    {"five", "f5e"}, {"six", "s6x"}, {"seven", "s7n"}, {"eight", "e8t"}, {"nine", "n9e"}
         };
 
     while (std::getline(infile, line)){
         std::string NewLine = line;
         for (const auto& pair : spellOutDigits){
-            replace(NewLine, pair.first, pair.second);
-            replace(NewLine, pair.first, pair.second);
-            replace(NewLine, pair.first, pair.second);
-            replace(NewLine, pair.first, pair.second);
-            replace(NewLine, pair.first, pair.second);
-            replace(NewLine, pair.first, pair.second);
-            }
+            while (replace(NewLine, pair.first, pair.second)==true){
+                replace(NewLine, pair.first, pair.second);
+                replace(NewLine, pair.first, pair.second);
+            }   }
        // replace(NewLine, "one", "1");
        // replace(NewLine, "two", "2");
        // replace(NewLine, "three", "3");
@@ -50,7 +51,7 @@ int main(){
         int lastNumberInLine = *lastNumberPosition - '0';
         int lineNumber = firstNmberInLine*10+lastNumberInLine;
         number = number+lineNumber;
-    std::cout<<"Newline:"<<NewLine <<"\n-Line:"<< line << ':' << firstNmberInLine <<" & " << lastNumberInLine << '\n';
+    std::cout<<"Newline:"<<NewLine <<"\n-Line: "<< line << ':' << firstNmberInLine <<" & " << lastNumberInLine << "="<<number<< '\n';
     }
     std::cout<< number;
 }
