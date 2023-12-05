@@ -4,47 +4,48 @@
 #include <string_view>
 #include <vector>
 
-bool stillContains(std::auto& it, line.end(), color.begin(), color.end())
-{
-    // str.find() (or str.contains(), since C++23) can be used as well
-    std::search(cont.begin(), cont.end(), s.begin(), s.end()) != cont.end();
-    return true
-}
-
-
 int main() {
     std::ifstream infile("bag.txt");
-    std::string line;
-
-    int sumOfPossibleGames = 0;
-    int colorPos = 0;
-    while (std::getline(infile, line)) {
-        // Find the game ID in the line
-        auto pos = line.find("Game ");
-        if (pos != std::string::npos) {
-            int gameId = std::stoi(line.substr(pos + 5, line.find(":") - pos - 5));
-            //std::cout<< gameId;
-            // Read the subsets of cubes for the current game
-            int redCubes = 0, greenCubes = 0, blueCubes = 0;
-            std::vector <std::string> colors = {"red", "green","blue"};
-            for (const auto& color : colors) {
-               while (std::search(it, line.end(), color.begin(), color.end())==true)
-               {
-                    const auto it = std::search(line.begin(), line.end(), color.begin(), color.end());
-                    int colorPos = std::distance(line.begin(), it);
-                    std::cout<<color<<':'<<colorPos<<'\n';
-                }
-            }
-
-            // Check if the game is possible
-           // if (redCubes == 12 && greenCubes == 13 && blueCubes == 14) {
-             //   sumOfPossibleGames += gameId;
-
-        }
+    if (!infile)
+    {
+        std::cerr << "Error opening file" << std::endl;
+        return 1;
     }
 
-    std::cout << "Sum of possible games: " << sumOfPossibleGames << std::endl;
+    std::string line;
+    int sumOfPossibleGames = 0;
 
+    while (std::getline(infile, line))
+    {
+        std::vector<int> PosNum;
+        auto LastPosGameId = line.find(": "); //position der letzte Zah der id
+        auto FirstPosGameId = line.find("Game ");
+        std::string IdStr = line.substr(FirstPosGameId+5, LastPosGameId-FirstPosGameId-5);
+        int Id = std::stoi(IdStr);
+        auto LastFirPosNum = std::find_if(line.begin()+LastPosGameId, line.end(), isalnum);
+        auto LastFirPos = std::distance(line.begin(), LastFirPosNum);
+        std::string firstNumStr = line.substr(LastPosGameId+1, LastFirPos-LastPosGameId+2);
+        int Numnum = std::stoi(firstNumStr);
+        std::cout<<"Numnum"<< Numnum << '\n';
+        //std::cout << "LastFirPosNum: "<<LastFirPos<<" LastPosGameId: "<<LastPosGameId<< "firstNumStr"<< firstNumStr <<'\n';
+        for (int i = LastPosGameId; i < line.length(); ++i)
+        {
+            if (line[i] == ';')
+            {
+                PosNum.push_back(i);
+            }
+             else if (line[i] == ',')
+            {
+                PosNum.push_back(i);
+            }
+        }
+        std::cout<<"Id: " << Id <<'\n';
+        for (int FirstPos : PosNum )
+        {
+            
+            std::cout << "Zeichen " << line[FirstPos] << " ist an " << FirstPos << std::endl;
+        }
+    }
     return 0;
 }
 
